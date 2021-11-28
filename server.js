@@ -25,14 +25,24 @@ const config = {
 app.use(auth(config));
 
 // req.isAuthenticated is provided from the auth router
+// TODO: Create landing page
 app.get("/", requiresAuth(), (req, res) => {
-    res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out");
+    // res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out");
+    res.send(req.oidc.user);
 });
 
-app.post("/callback", (_req, res) => {
+app.post("/callback", requiresAuth(), (_req, res, _next) => {
     res.redirect("/");
 });
 
 app.use("/dashboard", requiresAuth(), dashboardRouter);
+
+// Error handlers
+app.use((err, _req, res, next) => {
+    console.log("Custom error handler:");
+    console.log(err);
+    res.redirect("/");
+    next();
+});
 
 app.listen(5001);
