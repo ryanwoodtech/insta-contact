@@ -1,0 +1,29 @@
+.card {
+  display: flex;
+  flex-direction: column;
+  width: 25rem;
+  margin: 1rem;
+  box-shadow: 0px 2px 13px rgba(0, 0, 0, 0.25);
+}
+
+.card_content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 1rem;
+}
+
+.card_img {
+  width: 50%;
+}
+
+.card_title {
+  margin-top: 0.5rem;
+}
+
+.card_btn {
+  color: white;
+  font-size: 1.25rem;
+  font-weight: bold;
+  background-color: #4e10ff;
+}

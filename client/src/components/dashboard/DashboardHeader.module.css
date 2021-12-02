@@ -1,0 +1,14 @@
+.header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 3rem;
+}
+
+.header_image {
+  width: 10rem;
+}
+
+.header_title {
+  margin-top: 1rem;
+}
