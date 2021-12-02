@@ -1,14 +1,36 @@
-import orgImg from "../../assets/RWT-icon.svg";
 import styles from "./DashboardCard.module.css";
 
-function DashboardCard() {
+function DashboardCard(props) {
+  console.log(props);
+  if (props.data.cardType === "new") {
+    return (
+      <div className={styles.card}>
+        <div className={styles.card_content}>
+          <h3 className={styles.card_title_new}>{props.data.cardTitle}</h3>
+          <img
+            className={styles.card_img}
+            src={props.data.cardImg}
+            alt="RWT Icon"
+            onClick={props.handleClick}
+          />
+        </div>
+      </div>
+    );
+  }
+
   return (
     <div className={styles.card}>
       <div className={styles.card_content}>
-        <img className={styles.card_img} src={orgImg} alt="RWT Icon" />
-        <h3 className={styles.card_title}>Orginzation Title</h3>
+        <img
+          className={styles.card_img}
+          src={props.data.cardImg}
+          alt="RWT Icon"
+        />
+        <h3 className={styles.card_title}>{props.data.cardTitle}</h3>
       </div>
-      <button className={styles.card_btn}>Manage</button>
+      <button onClick={props.handleClick} className={styles.card_btn}>
+        Manage
+      </button>
     </div>
   );
 }
