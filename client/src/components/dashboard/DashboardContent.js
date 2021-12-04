@@ -1,6 +1,8 @@
 import React from "react";
+
 import Modal from "react-modal";
 import DashboardCard from "./DashboardCard";
+import DashboardForm from "./DashboardForm";
 
 import styles from "./DashboardContent.module.css";
 
@@ -37,7 +39,6 @@ const customStyles = {
   },
 };
 
-
 function DashboardContent() {
   function handleNewClick() {
     // Open modal
@@ -47,6 +48,7 @@ function DashboardContent() {
   function handleManageClick() {
     alert("Manage clicked!");
   }
+
   const [isOpen, setIsOpen] = React.useState(false);
   let subtitle;
 
@@ -84,6 +86,7 @@ function DashboardContent() {
           handleClick={handleNewClick}
         />
       </div>
+
       <Modal
         isOpen={isOpen}
         onAfterOpen={afterOpenModal}
@@ -91,9 +94,7 @@ function DashboardContent() {
         style={customStyles}
         contentLabel="Example Modal"
       >
-        <h2 ref={(_subtitle) => (subtitle = _subtitle)}>HHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloHelloello</h2>
-        <button onClick={closeModal}>close</button>
-        <div>I am a modal</div>
+        <DashboardForm onClick={closeModal}/>
       </Modal>
     </>
   );

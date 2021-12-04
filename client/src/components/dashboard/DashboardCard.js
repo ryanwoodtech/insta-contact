@@ -1,7 +1,6 @@
 import styles from "./DashboardCard.module.css";
 
 function DashboardCard(props) {
-  console.log(props);
   if (props.data.cardType === "new") {
     return (
       <div className={styles.card}>
