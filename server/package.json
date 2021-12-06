@@ -5,7 +5,10 @@
   "main": "server.js",
   "scripts": {
     "dev": "nodemon server.js",
-    "start": "node server.js"
+    "start": "node server.js",
+    "latest": "npx knex migrate:latest --knexfile db/knexfile.js",
+    "rollback": "npx knex migrate:rollback --knexfile db/knexfile.js",
+    "reset": "npm run rollback && npm run latest"
   },
   "repository": {
     "type": "git"
@@ -20,7 +23,9 @@
   "dependencies": {
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "express-openid-connect": "^2.5.1"
+    "express-openid-connect": "^2.5.1",
+    "knex": "^0.95.14",
+    "pg": "^8.7.1"
   },
   "devDependencies": {
     "nodemon": "^2.0.15"

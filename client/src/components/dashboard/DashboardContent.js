@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 
 import Modal from "react-modal";
 import DashboardCard from "./DashboardCard";
@@ -9,37 +9,25 @@ import styles from "./DashboardContent.module.css";
 import orgImg from "../../assets/RWT-icon.svg";
 import newOrgImg from "../../assets/add.svg";
 
-const organizations = [
-  {
-    cardImg: orgImg,
-    cardTitle: "Organization Title",
-  },
-  {
-    cardImg: orgImg,
-    cardTitle: "Organization Title",
-  },
-  {
-    cardImg: orgImg,
-    cardTitle: "Organization Title",
-  },
-  {
-    cardImg: orgImg,
-    cardTitle: "Organization Title",
-  },
-];
-
 const customStyles = {
   content: {
-    top: '50%',
-    left: '50%',
-    right: 'auto',
-    bottom: 'auto',
-    marginRight: '-50%',
-    transform: 'translate(-50%, -50%)',
+    top: "50%",
+    left: "50%",
+    right: "auto",
+    bottom: "auto",
+    marginRight: "-50%",
+    transform: "translate(-50%, -50%)",
   },
 };
 
 function DashboardContent() {
+  const [organizations, setOrganizations] = useState([
+    {
+      cardImg: orgImg,
+      cardTitle: "Organization Title",
+    },
+  ]);
+
   function handleNewClick() {
     // Open modal
     openModal();
@@ -63,6 +51,10 @@ function DashboardContent() {
 
   function closeModal() {
     setIsOpen(false);
+  }
+
+  function addOrganization(newOrganizationTemp) {
+    setOrganizations(prev => prev.concat(newOrganizationTemp))
   }
 
   return (
@@ -94,7 +86,7 @@ function DashboardContent() {
         style={customStyles}
         contentLabel="Example Modal"
       >
-        <DashboardForm onClick={closeModal}/>
+        <DashboardForm onClick={closeModal} addOrganization={addOrganization} />
       </Modal>
     </>
   );
