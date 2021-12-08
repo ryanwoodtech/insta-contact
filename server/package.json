@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "nodemon server.js",
     "start": "node server.js",
-    "build": "cd client && npm install && npm run build",
+    "build": "cd ../client && npm install && npm run build",
     "latest": "npx knex migrate:latest --knexfile db/knexfile.js",
     "rollback": "npx knex migrate:rollback --knexfile db/knexfile.js",
     "reset": "npm run rollback && npm run latest"
@@ -21,11 +21,11 @@
     "url": "https://github.com/ryanwoodtech/instacontact-biz/issues"
   },
   "homepage": "https://github.com/ryanwoodtech/instacontact-biz#readme",
-  "proxy": "http://localhost:5001",
   "engines": {
     "node": "16.13.0"
   },
   "dependencies": {
+    "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
     "express-openid-connect": "^2.5.1",

@@ -3,6 +3,13 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const path = require("path");
+const cors = require("cors");
+
+const corsOptions = {
+  origin: "http://localhost:3000",
+};
+
+app.use(cors(corsOptions));
 
 const auth = require("./auth");
 const { requiresAuth } = require("express-openid-connect");
@@ -22,7 +29,7 @@ app.use(auth);
 app.use("/dashboard", requiresAuth(), dashboardRouter);
 
 app.post("/callback", requiresAuth(), (_req, res, _next) => {
-  res.redirect("/");
+  res.redirect("/api");
 });
 
 app.get("/api", (req, res) => {
@@ -30,16 +37,12 @@ app.get("/api", (req, res) => {
 });
 
 // Have Node serve the files for our built React app
-express.static(path.resolve(__dirname, "../client/public/index.html"))
-
-  app.use(
-  );
 
 // req.isAuthenticated is provided from the auth router
 app.get("/", requiresAuth(), (req, res) => {
-  // res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out"6y);
+  // res.send(req.oidc.isAuthenticated() ? "Logged in" : "Logged out");
   // res.send(req.oidc.user); // Sends JSON about the user
-
+  res.send("You're at /");
 });
 
 // Error handlers
