@@ -1,26 +1,70 @@
-import React from "react";
-import { useAuth0 } from "@auth0/auth0-react";
+import React, {useState} from "react";
 
-function Landing(props) {
-  const { getAccessTokenSilently } = useAuth0();
-  function callOpenApi() {
-    fetch("http://localhost:5001/api").then((res) => console.log(res.text()));
+function Landing() {
+  const signupUrl = "http://localhost:5001/signup";
+  const loginUrl = "http://localhost:5001/login";
+
+  const [values, setValues] = useState({
+    email: '',
+    password: ''
+  })
+
+  async function signup(e) {
+    e.preventDefault();
+    console.log("signup pressed");
+    console.log("From values:", values);
+
+    const response = await fetch(signupUrl, {
+      method: "post",
+    })
+    const text = await response.text()
+    console.log(text)
   }
-  async function callProtectedApi() {
-    const token = await getAccessTokenSilently();
-    const response = await fetch("http://localhost:5001/", {
-      headers: {
-        authorization: `Bearer ${token}`,
-      },
-    });
-    console.log(response);
-    // fetch("http://localhost:5001/");
+
+  async function login(e) {
+    e.preventDefault();
+    console.log("login pressed");
+
+    const response = await fetch(loginUrl)
+    const text = await response.text()
+    console.log(text)
   }
+
+  function handleInputChange(e){
+    console.log(e.target.value)
+    setValues({
+      ...values,
+      [e.target.name]: e.target.value
+    }
+    )
+  }
+
   return (
     <>
-      <button onClick={props.onPress}>Login</button>
-      <button onClick={callOpenApi}>Call Open API</button>
-      <button onClick={callProtectedApi}>Call Protected API</button>
+      <form>
+        <input 
+          type="email" 
+          name="email" 
+          id="email" 
+          onChange={handleInputChange} 
+          value={values['email']}
+          placeholder="Email">
+        </input>
+        <input
+          type="password"
+          name="password"
+          id="password"
+          onChange={handleInputChange}
+          value={values['password']}
+          placeholder="Password"
+        ></input>
+        <button type="submit" onClick={signup}>
+          Signup
+        </button>
+        <button type="submit" onClick={login}>
+          Login
+        </button>
+      </form>
     </>
   );
 }

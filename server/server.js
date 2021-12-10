@@ -1,22 +1,29 @@
 require("dotenv").config();
 const express = require("express");
 const app = express();
-const path = require("path");
 const cors = require("cors");
-
-app.use(cors(corsOptions));
-app.use(express.urlencoded({ extended: true })); // Access req.body from any middleware
-app.use(express.json()); // Parse JSON in req.body from any middleware
 
 const corsOptions = {
   origin: "http://localhost:3000",
 };
+app.use(cors(corsOptions));
+app.use(express.urlencoded({ extended: true })); // Access req.body from any middleware
+app.use(express.json()); // Parse JSON in req.body from any middleware
+
 const PORT = process.env.PORT || 5001;
 
 // Routers
 const dashboardRouter = require("./routes/dashboard");
 
 app.use("/dashboard", dashboardRouter);
+
+app.post("/signup", (req, res) => {
+  res.send("You're at /signup");
+});
+
+app.get("/login", (req, res) => {
+  res.send("You're at /login");
+});
 
 app.get("/", (req, res) => {
   res.send("You're at /");
