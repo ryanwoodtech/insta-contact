@@ -2,6 +2,7 @@ require("dotenv").config();
 const express = require("express");
 const app = express();
 const cors = require("cors");
+const db = require('./db/db')
 const bcrypt = require("bcrypt");
 const { v4: uuidv4 } = require("uuid");
 
@@ -34,15 +35,14 @@ app.post("/signup", async (req, res) => {
 
   // Refactor this into a database interface
   // Wont work because it doesn't have a reference to the knexfile
-  const response = await knex("user").insert({
-    id: newUser.id,
+  const response = await db('user').insert({ id: newUser.id,
     email: newUser.email,
     password: newUser.hashedPassword,
-  });
+  }, "id");
 
-  console.log('Response:', response)
+  console.log('New user added. ID:', response)
 
-  res.send(`Hello ${req.body.email}, Nice password: ${req.body.password}`);
+  res.send(`New user added. ID: ${response}.`);
 });
 
 app.get("/login", (req, res) => {
