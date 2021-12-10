@@ -1,61 +1,70 @@
-import React, {useState} from "react";
+import React, { useState } from "react";
 
 function Landing() {
   const signupUrl = "http://localhost:5001/signup";
   const loginUrl = "http://localhost:5001/login";
 
   const [values, setValues] = useState({
-    email: '',
-    password: ''
-  })
+    email: "",
+    password: "",
+  });
+  const [submitting, setSubmitting] = useState(false);
 
   async function signup(e) {
     e.preventDefault();
-    console.log("signup pressed");
-    console.log("From values:", values);
+    setSubmitting(true);
+    console.log(`Client: signup pressed`);
+    console.log(`Client: From values: ${JSON.stringify(values)}`);
 
     const response = await fetch(signupUrl, {
       method: "post",
-    })
-    const text = await response.text()
-    console.log(text)
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+    const text = await response.text();
+    console.log(`Server: ${text}`);
+
+    setSubmitting(false);
   }
 
   async function login(e) {
     e.preventDefault();
-    console.log("login pressed");
+    setSubmitting(true);
+    console.log("Client: login pressed");
 
-    const response = await fetch(loginUrl)
-    const text = await response.text()
-    console.log(text)
+    const response = await fetch(loginUrl);
+    const text = await response.text();
+    console.log(`Server: ${text}`);
+
+    setSubmitting(false);
   }
 
-  function handleInputChange(e){
-    console.log(e.target.value)
+  function handleInputChange(e) {
     setValues({
       ...values,
-      [e.target.name]: e.target.value
-    }
-    )
+      [e.target.name]: e.target.value,
+    });
   }
 
   return (
     <>
       <form>
-        <input 
-          type="email" 
-          name="email" 
-          id="email" 
-          onChange={handleInputChange} 
-          value={values['email']}
-          placeholder="Email">
-        </input>
+        <input
+          type="email"
+          name="email"
+          id="email"
+          onChange={handleInputChange}
+          value={values["email"]}
+          placeholder="Email"
+        ></input>
         <input
           type="password"
           name="password"
           id="password"
           onChange={handleInputChange}
-          value={values['password']}
+          value={values["password"]}
           placeholder="Password"
         ></input>
         <button type="submit" onClick={signup}>
