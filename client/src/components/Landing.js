@@ -33,8 +33,16 @@ function Landing() {
     e.preventDefault();
     setSubmitting(true);
     console.log("Client: login pressed");
+    console.log(`Client: From values: ${JSON.stringify(values)}`);
 
-    const response = await fetch(loginUrl);
+    const response = await fetch(loginUrl, {
+      method: "post",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(values),
+    });
+
     const text = await response.text();
     console.log(`Server: ${text}`);
 
